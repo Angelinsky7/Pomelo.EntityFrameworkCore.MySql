@@ -68,7 +68,7 @@ namespace Microsoft.EntityFrameworkCore
 
         /// <summary>
         /// Returns data from a JSON document, selected from the parts of the document matched by the path arguments.
-        /// Returns `null` if any argument is `null` or no paths locate a value in the document. An error occurs if the
+        /// Returns `null` (quoted) if any argument is `null` or no paths locate a value in the document. An error occurs if the
         /// `json` argument is not a valid JSON document or any path argument is not a valid path expression.
         /// </summary>
         /// <param name="_">DbFunctions instance</param>
@@ -83,6 +83,24 @@ namespace Microsoft.EntityFrameworkCore
             [NotNull] object json,
             [NotNull] params string[] paths)
             => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(JsonExtract)));
+
+        /// <summary>
+        /// Returns data from a JSON document, selected from the parts of the document matched by the path arguments.
+        /// Returns `null` (not quoted) if any argument is `null` or no paths locate a value in the document. An error occurs if the
+        /// `json` argument is not a valid JSON document or any path argument is not a valid path expression.
+        /// </summary>
+        /// <param name="_">DbFunctions instance</param>
+        /// <param name="json">
+        /// A JSON column or value. Can be a DOM object, a string property mapped to JSON, or a user POCO mapped to JSON.
+        /// </param>
+        /// <param name="paths">
+        /// A set of paths to extract from <paramref name="json"/>.
+        /// </param>
+        public static T JsonValue<T>(
+            [CanBeNull] this DbFunctions _,
+            [NotNull] object json,
+            [NotNull] params string[] paths)
+            => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(JsonValue)));
 
         /// <summary>
         /// Checks if <paramref name="json"/> contains <paramref name="candidate"/>.

@@ -342,6 +342,24 @@ WHERE JSON_EXTRACT(`j`.`Customer`, '$.Name') = @__name_1");
         }
 
         [Fact]
+        public void JsonValue()
+        {
+            using var ctx = CreateContext();
+
+            var name = @"Joe";
+            var count = ctx.JsonEntities.Count(e =>
+                EF.Functions.JsonValue<string>(e.Customer, "$.Name") == name);
+
+            Assert.Equal(1, count);
+            AssertSql(
+                $@"@__name_1='Joe' (Size = 4000)
+
+SELECT COUNT(*)
+FROM `JsonEntities` AS `j`
+WHERE JSON_VALUE(`j`.`Customer`, '$.Name') = @__name_1");
+        }
+
+        [Fact]
         public void JsonExtract_JsonUnquote()
         {
             using var ctx = CreateContext();

@@ -124,7 +124,15 @@ namespace Pomelo.EntityFrameworkCore.MySql.Query.ExpressionVisitors.Internal
 
             if (expression.Path.Count > 0)
             {
-                Sql.Append("JSON_EXTRACT(");
+                if (false) {
+#pragma warning disable CS0162 // Unreachable code detected
+                    Sql.Append("JSON_EXTRACT(");
+#pragma warning restore CS0162 // Unreachable code detected
+                }
+                else
+                {
+                    Sql.Append("JSON_VALUE(");
+                }
             }
 
             Visit(expression.Expression);

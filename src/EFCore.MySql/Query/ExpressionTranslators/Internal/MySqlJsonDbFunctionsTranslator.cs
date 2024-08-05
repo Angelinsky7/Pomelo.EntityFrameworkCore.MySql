@@ -90,6 +90,15 @@ namespace Pomelo.EntityFrameworkCore.MySql.Query.ExpressionTranslators.Internal
                         method.ReturnType,
                         _sqlExpressionFactory.FindMapping(method.ReturnType, "json"),
                         false),
+                nameof(MySqlJsonDbFunctionsExtensions.JsonValue)
+                    => _sqlExpressionFactory.NullableFunction(
+                        "JSON_VALUE",
+                        Array.Empty<SqlExpression>()
+                            .Append(Json(args[0]))
+                            .Concat(DeconstructParamsArray(args[1])),
+                        method.ReturnType,
+                        _sqlExpressionFactory.FindMapping(method.ReturnType, "json"),
+                        false),
                 nameof(MySqlJsonDbFunctionsExtensions.JsonContains)
                     => _sqlExpressionFactory.NullableFunction(
                         "JSON_CONTAINS",
